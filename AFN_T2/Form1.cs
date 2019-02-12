@@ -88,5 +88,10 @@ namespace AFN_T2
                 textboxResultado.Text = "Respuestas del analizador";
             }
         }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }

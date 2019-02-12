@@ -29,15 +29,18 @@
         private void InitializeComponent()
         {
             this.opciones = new System.Windows.Forms.GroupBox();
-            this.datos = new System.Windows.Forms.GroupBox();
-            this.labelResultado = new System.Windows.Forms.GroupBox();
-            this.abrir = new System.Windows.Forms.Button();
             this.ejecutar = new System.Windows.Forms.Button();
+            this.abrir = new System.Windows.Forms.Button();
+            this.datos = new System.Windows.Forms.GroupBox();
             this.textboxDatos = new System.Windows.Forms.RichTextBox();
+            this.labelResultado = new System.Windows.Forms.GroupBox();
             this.textboxResultado = new System.Windows.Forms.RichTextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cadena = new System.Windows.Forms.RichTextBox();
             this.opciones.SuspendLayout();
             this.datos.SuspendLayout();
             this.labelResultado.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // opciones
@@ -52,27 +55,15 @@
             this.opciones.Text = "Opciones";
             this.opciones.Enter += new System.EventHandler(this.opciones_Enter);
             // 
-            // datos
+            // ejecutar
             // 
-            this.datos.Controls.Add(this.textboxDatos);
-            this.datos.Location = new System.Drawing.Point(32, 85);
-            this.datos.Name = "datos";
-            this.datos.Size = new System.Drawing.Size(734, 210);
-            this.datos.TabIndex = 1;
-            this.datos.TabStop = false;
-            this.datos.Text = "Datos";
-            this.datos.Enter += new System.EventHandler(this.datos_Enter);
-            // 
-            // labelResultado
-            // 
-            this.labelResultado.Controls.Add(this.textboxResultado);
-            this.labelResultado.Location = new System.Drawing.Point(32, 304);
-            this.labelResultado.Name = "labelResultado";
-            this.labelResultado.Size = new System.Drawing.Size(734, 134);
-            this.labelResultado.TabIndex = 2;
-            this.labelResultado.TabStop = false;
-            this.labelResultado.Text = "Resultado";
-            this.labelResultado.Enter += new System.EventHandler(this.resultado_Enter);
+            this.ejecutar.Location = new System.Drawing.Point(96, 19);
+            this.ejecutar.Name = "ejecutar";
+            this.ejecutar.Size = new System.Drawing.Size(75, 23);
+            this.ejecutar.TabIndex = 1;
+            this.ejecutar.Text = "Ejecutar";
+            this.ejecutar.UseVisualStyleBackColor = true;
+            this.ejecutar.Click += new System.EventHandler(this.ejecutar_Click);
             // 
             // abrir
             // 
@@ -84,15 +75,16 @@
             this.abrir.UseVisualStyleBackColor = true;
             this.abrir.Click += new System.EventHandler(this.abrir_Click);
             // 
-            // ejecutar
+            // datos
             // 
-            this.ejecutar.Location = new System.Drawing.Point(96, 19);
-            this.ejecutar.Name = "ejecutar";
-            this.ejecutar.Size = new System.Drawing.Size(75, 23);
-            this.ejecutar.TabIndex = 1;
-            this.ejecutar.Text = "Ejecutar";
-            this.ejecutar.UseVisualStyleBackColor = true;
-            this.ejecutar.Click += new System.EventHandler(this.ejecutar_Click);
+            this.datos.Controls.Add(this.textboxDatos);
+            this.datos.Location = new System.Drawing.Point(32, 152);
+            this.datos.Name = "datos";
+            this.datos.Size = new System.Drawing.Size(734, 210);
+            this.datos.TabIndex = 1;
+            this.datos.TabStop = false;
+            this.datos.Text = "Datos";
+            this.datos.Enter += new System.EventHandler(this.datos_Enter);
             // 
             // textboxDatos
             // 
@@ -103,6 +95,17 @@
             this.textboxDatos.Text = "";
             this.textboxDatos.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
+            // labelResultado
+            // 
+            this.labelResultado.Controls.Add(this.textboxResultado);
+            this.labelResultado.Location = new System.Drawing.Point(32, 350);
+            this.labelResultado.Name = "labelResultado";
+            this.labelResultado.Size = new System.Drawing.Size(734, 134);
+            this.labelResultado.TabIndex = 2;
+            this.labelResultado.TabStop = false;
+            this.labelResultado.Text = "Resultado";
+            this.labelResultado.Enter += new System.EventHandler(this.resultado_Enter);
+            // 
             // textboxResultado
             // 
             this.textboxResultado.Location = new System.Drawing.Point(15, 28);
@@ -111,11 +114,31 @@
             this.textboxResultado.TabIndex = 0;
             this.textboxResultado.Text = "";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cadena);
+            this.groupBox1.Location = new System.Drawing.Point(32, 84);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(734, 62);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Entrada";
+            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // cadena
+            // 
+            this.cadena.Location = new System.Drawing.Point(15, 19);
+            this.cadena.Name = "cadena";
+            this.cadena.Size = new System.Drawing.Size(703, 27);
+            this.cadena.TabIndex = 0;
+            this.cadena.Text = "";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 497);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.labelResultado);
             this.Controls.Add(this.datos);
             this.Controls.Add(this.opciones);
@@ -125,6 +148,7 @@
             this.opciones.ResumeLayout(false);
             this.datos.ResumeLayout(false);
             this.labelResultado.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -138,6 +162,8 @@
         private System.Windows.Forms.Button abrir;
         private System.Windows.Forms.RichTextBox textboxDatos;
         private System.Windows.Forms.RichTextBox textboxResultado;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RichTextBox cadena;
     }
 }
 
