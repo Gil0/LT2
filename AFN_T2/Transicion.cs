@@ -22,7 +22,7 @@ namespace AFN_T2
 
         public override string ToString()
         {
-            return string.Format("({0}, {1}) -> {2}", EstadoInicial, Simbolo, EstadoFinal);
+            return string.Format("∂({0}, {1}) -> {2}", EstadoInicial, Simbolo, EstadoFinal);
         }
 
     }

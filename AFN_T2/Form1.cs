@@ -65,8 +65,6 @@ namespace AFN_T2
                     rutaArchivo = DialogoAbrirArchivo.FileName;
                     nombre = DialogoAbrirArchivo.SafeFileName;
 
-
-
                     int counter = 0;
                     string line;
                     Q = new List<string>();
@@ -82,9 +80,6 @@ namespace AFN_T2
                         counter++;
                     }
                     file.Close();
-
-
-
 
                     for (int i = 0; i < DATA.Count - 1; i++)
                     {
@@ -133,34 +128,79 @@ namespace AFN_T2
 
                     }
 
-                    
- /*
-                    Console.Out.WriteLine("Conjunto estados");
-                    for (int i = 0; i < Q.Count; i++){
-                       Console.WriteLine(Q[i]);
-                    }
-                    Console.Out.WriteLine("Alfabeto");
-                    for (int i = 0; i < Alfabeto.Count; i++)
+                    String Qinfo = "Q = { ";
+                    for (int i = 0; i < Q.Count; i++)
                     {
-                        Console.WriteLine(Alfabeto[i]);
-                    }
-                    Console.Out.WriteLine("Estado Inicial");
-                    for (int i = 0; i < EstadoInicial.Count; i++)
-                    {
-                        Console.WriteLine(EstadoInicial[i]);
-                    }
-                    Console.Out.WriteLine("Estado Final");
-                    for (int i = 0; i < EstadoFinal.Count; i++)
-                    {
-                        Console.WriteLine(EstadoFinal[i]);
+                        if (i == Q.Count - 1)
+                        {
+                            Qinfo = Qinfo + Q[i] + " }";
+                        }
+                        else
+                        {
+                            Qinfo = Qinfo + Q[i] + ",";
+                        }
                     }
 
+                    String AlfabetoInfo = "∑ = { ";
+                    for (int i = 0; i < Alfabeto.Count; i++)
+                    {
+                        if (i == Alfabeto.Count - 1)
+                        {
+                            AlfabetoInfo = AlfabetoInfo + Alfabeto[i] + " }";
+                        }
+                        else
+                        {
+                            AlfabetoInfo = AlfabetoInfo + Alfabeto[i] + ",";
+                        }
+                    }
+
+                    String q0info = "q0 = { " + EstadoInicial[0] + " }";
+                    String Finfo = "F = { ";
+                    for (int i = 0; i < EstadoFinal.Count; i++)
+                    {
+                        if (i == EstadoFinal.Count - 1)
+                        {
+                            Finfo = Finfo + EstadoFinal[i] + " }";
+                        }
+                        else
+                        {
+                            Finfo = Finfo + EstadoFinal[i] + ",";
+                        }
+                    }
+                    String transicionesinfo = "Transiciones: \n";
                     for (int i = 0; i < Transiciones.Count; i++)
                     {
-                        Console.WriteLine(Transiciones[i]);
+                        transicionesinfo = transicionesinfo + Transiciones[i] + "\n";
                     }
-*/
-                  
+                    String showData = Qinfo + "\n" + AlfabetoInfo + "\n" + q0info + "\n" + Finfo + "\n" + transicionesinfo;
+                    textboxDatos.Text = showData;
+                    /*
+                                       Console.Out.WriteLine("Conjunto estados");
+                                       for (int i = 0; i < Q.Count; i++){
+                                          Console.WriteLine(Q[i]);
+                                       }
+                                       Console.Out.WriteLine("Alfabeto");
+                                       for (int i = 0; i < Alfabeto.Count; i++)
+                                       {
+                                           Console.WriteLine(Alfabeto[i]);
+                                       }
+                                       Console.Out.WriteLine("Estado Inicial");
+                                       for (int i = 0; i < EstadoInicial.Count; i++)
+                                       {
+                                           Console.WriteLine(EstadoInicial[i]);
+                                       }
+                                       Console.Out.WriteLine("Estado Final");
+                                       for (int i = 0; i < EstadoFinal.Count; i++)
+                                       {
+                                           Console.WriteLine(EstadoFinal[i]);
+                                       }
+
+                                       for (int i = 0; i < Transiciones.Count; i++)
+                                       {
+                                           Console.WriteLine(Transiciones[i]);
+                                       }
+                   */
+
 
 
 
