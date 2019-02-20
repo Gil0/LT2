@@ -17,14 +17,19 @@ namespace AFN_T2
         private readonly List<Transicion> Transiciones = new List<Transicion>();
         private string Q0;
         private readonly List<string> F = new List<string>();
+        private string acumula = "";
+        private List<String> acumulador = new List<string>();
+        private readonly List<string> Nombres = new List<string>();
 
-        public MaquinaEstadosFinitosDeterminista(IEnumerable<string> conjuntoestados, IEnumerable<char> alfabeto, IEnumerable<Transicion> transiciones, string q0, IEnumerable<string> f)
+        public MaquinaEstadosFinitosDeterminista(IEnumerable<string> conjuntoestados, IEnumerable<char> alfabeto, IEnumerable<Transicion> transiciones, string q0, IEnumerable<string> f, IEnumerable<string> nombres)
         {
             ConjuntoEstados = conjuntoestados.ToList();
             Alfabeto = alfabeto.ToList();
             AddTransitions(transiciones);
             AddInitialState(q0);
             AddFinalStates(f);
+            Nombres = nombres.ToList();
+
         }
 
         private void AddTransitions(IEnumerable<Transicion> transitions)
@@ -65,56 +70,66 @@ namespace AFN_T2
             }
         }
 
-        public Respuesta Aceptar(string input)
+        public Respuesta Aceptar2(string input)
         {
-            //Console.Out.WriteLine("Analizando: " + input + " ...");
-            //ConsoleWriter.Success();
-            if (InvalidInputOrFSM(input))
+            var estadoActual = Q0;
+            int contadorLinea = 1;
+            for (int i = 0; i < input.Length; i++)
             {
-                respuesta.estado = false;
-                respuesta.mensaje = "Caracter no valido";
-                return respuesta;
-            }
-            var currentState = Q0;
-            var steps = new StringBuilder();
-            foreach (var symbol in input.ToCharArray())
-            {
-                var transition = Transiciones.Find(t => t.EstadoInicial == currentState &&
-                                                 t.Simbolo == symbol);
-                if (transition == null)
+                Transicion normal = Transiciones.Find(t => t.EstadoInicial == estadoActual
+                                            && t.Simbolo == input[i]);
+                Transicion retroceso = Transiciones.Find(t => t.EstadoInicial == estadoActual
+                                            && t.Simbolo == 'o');
+
+                if(normal != null)
                 {
-                    respuesta.estado = false;
-                    respuesta.mensaje = "No hay transiciones para el estado actual y simbolo";
-                    return respuesta;
-                    //Console.Out.WriteLine("No transitions for current state and symbol");
-                    //Console.Out.WriteLine(steps.ToString());
-                    //ConsoleWriter.Failure("No transitions for current state and symbol");
-                    //ConsoleWriter.Failure(steps.ToString());
-                    //return;
+                    acumula = acumula + input[i];
+                    Console.WriteLine("Estado normal "+normal.EstadoFinal);
+                    if (F.Contains(normal.EstadoFinal) || (i + 1) >= input.Length)
+                    {
+                        estadoActual = Q0;
+                        Console.WriteLine("Lexema encontrado: " + acumula + " en linea: " + contadorLinea);
+                        acumula = "";
+                    }
+                    else
+                    {
+                        estadoActual = normal.EstadoFinal;
+                    }
                 }
-                currentState = transition.EstadoFinal;
-                steps.Append(transition + "\n");
-            }
-            if (F.Contains(currentState))
+                else if(retroceso != null)
+                {
+                    Console.WriteLine("Estado retroceso "+retroceso.EstadoFinal);
+                    Console.WriteLine("Lexema encontrado: " + acumula + " en linea: " + contadorLinea);
+                    acumula = "";
+                    estadoActual = Q0;
+                    i = i - 1;
+                }
+                else
+                {
+
+                    Console.WriteLine("ERROR: Lexema encontrado: " + acumula+" en linea: "+contadorLinea);
+                    estadoActual = Q0;
+                }
+                if (input[i] == '\n')
+                {
+                    contadorLinea++;
+                }
+            }  //fin for
+
+
+            if (F.Contains(estadoActual))
             {
                 respuesta.estado = true;
-                respuesta.mensaje = "cadena aceptada";
+                respuesta.mensaje = "cadena aceptttttada ";
+                respuesta.tok = acumulador;
                 return respuesta;
-                //Console.Out.WriteLine("Cadena aceptada ");
-                //Console.Out.WriteLine("Con transiciones:\n" + steps);
-                //Console.Out.WriteLine("Accepted the input with steps:\n" + steps);
-                //ConsoleWriter.Success("Accepted the input with steps:\n" + steps);
-                //return;
             }
             respuesta.estado = false;
-            respuesta.mensaje = "Cadena NO aceptada \n Detenido en el estado: "+currentState+" el cual no es un estado final";
+            respuesta.mensaje = "Cadena NO aceptada \n Detenido en el estado: " + estadoActual + " el cual no es un estado final";
             return respuesta;
-
-            //Console.Out.WriteLine("Stopped in state " + currentState + " which is not a final state.");
-            //Console.Out.WriteLine(steps.ToString());
-            //ConsoleWriter.Failure("Stopped in state " + currentState +" which is not a final state.");
-            //ConsoleWriter.Failure(steps.ToString());
+            
         }
+       
 
         private bool InvalidInputOrFSM(string input)
         {
@@ -126,17 +141,12 @@ namespace AFN_T2
             {
                 respuesta.estado = false;
                 respuesta.mensaje = "Estado inicial no ha sido establecido";
-                //return respuesta;
-                //Console.Out.WriteLine("Estado inicial no ha sido establecido");
-                //ConsoleWriter.Failure("No initial state has been set");
                 return true;
             }
             if (NoFinalStates())
             {
                 respuesta.estado = false;
                 respuesta.mensaje = "No se han establecido estado Finales validos";
-                //Console.Out.WriteLine("No se han establecido estado Finales validos");
-                //ConsoleWriter.Failure("No final states have been set");
                 return true;
             }
             return false;
@@ -151,8 +161,6 @@ namespace AFN_T2
             {
                 respuesta.estado = false;
                 respuesta.mensaje = "Cadena NO aceptada \n No se puede aceptar el simbolo: "+symbol+ "debido a que no es parte del alfabeto.";
-                //Console.Out.WriteLine("Cadena NO aceptada ");
-                //Console.Out.WriteLine("No se puede aceptar el simbolo: " + symbol + " debido a que no es parte del alfabeto.");
                 return true;
             }
 

@@ -8,3 +8,13 @@ C:\Users\Gil0\source\repos\AFN_T2\AFN_T2\obj\Debug\AFN_T2.csproj.GenerateResourc
 C:\Users\Gil0\source\repos\AFN_T2\AFN_T2\obj\Debug\AFN_T2.csproj.CoreCompileInputs.cache
 C:\Users\Gil0\source\repos\AFN_T2\AFN_T2\obj\Debug\AFN_T2.exe
 C:\Users\Gil0\source\repos\AFN_T2\AFN_T2\obj\Debug\AFN_T2.pdb
+C:\Users\Rómulo\source\repos\LT2\AFN_T2\bin\Debug\AFN_T2.exe.config
+C:\Users\Rómulo\source\repos\LT2\AFN_T2\bin\Debug\AFN_T2.exe
+C:\Users\Rómulo\source\repos\LT2\AFN_T2\bin\Debug\AFN_T2.pdb
+C:\Users\Rómulo\source\repos\LT2\AFN_T2\obj\Debug\AFN_T2.csprojAssemblyReference.cache
+C:\Users\Rómulo\source\repos\LT2\AFN_T2\obj\Debug\AFN_T2.Form1.resources
+C:\Users\Rómulo\source\repos\LT2\AFN_T2\obj\Debug\AFN_T2.Properties.Resources.resources
+C:\Users\Rómulo\source\repos\LT2\AFN_T2\obj\Debug\AFN_T2.csproj.GenerateResource.cache
+C:\Users\Rómulo\source\repos\LT2\AFN_T2\obj\Debug\AFN_T2.csproj.CoreCompileInputs.cache
+C:\Users\Rómulo\source\repos\LT2\AFN_T2\obj\Debug\AFN_T2.exe
+C:\Users\Rómulo\source\repos\LT2\AFN_T2\obj\Debug\AFN_T2.pdb

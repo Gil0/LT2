@@ -10,5 +10,6 @@ namespace AFN_T2
     {
         public Boolean estado;
         public String mensaje;
+        public List<String> tok;
     }
 }

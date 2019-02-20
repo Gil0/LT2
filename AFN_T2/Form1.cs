@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -22,6 +23,7 @@ namespace AFN_T2
         List<char> Alfabeto;
         List<char> EstadoInicial;
         List<string> EstadoFinal;
+        List<string> Nombres;
         List<Transicion> Transiciones;
         List<string> DATA;
 
@@ -69,6 +71,10 @@ namespace AFN_T2
                     string line;
                     Q = new List<string>();
                     Alfabeto = new List<char>();
+                    Alfabeto.Add('\n');
+                    Alfabeto.Add('\t');
+                    Alfabeto.Add(' ');
+                    Nombres = new List<string>();
                     EstadoInicial = new List<char>();
                     EstadoFinal = new List<string>();
                     Transiciones = new List<Transicion>();
@@ -109,8 +115,18 @@ namespace AFN_T2
                                     EstadoFinal.Add(s);
                                 }
                                 break;
+                            case 9:
+                                foreach (var s in DATA[i].Split(','))
+                                {
+                                    Nombres.Add(s);
+                                    int index = s.IndexOf(':');
+                                    string izq = s.Substring(0, index);
+                                    string der = s.Substring(index+1, (s.Length)-(index+1));
+                                    Console.WriteLine(izq+" "+der);
+                                }
+                                break;
                             default:
-                                if (i > 8)
+                                if (i > 10)
                                 {
                                     String[] transicion = new String[3];
                                     int count = 0;
@@ -283,9 +299,9 @@ namespace AFN_T2
                     Console.Out.WriteLine(aux);
                     var MEFD = new MaquinaEstadosFinitosDeterminista(Q, Alfabeto, Transiciones, aux, EstadoFinal);
                     Respuesta res = new Respuesta();
-                    res = MEFD.Aceptar(cadena.Text);
+                    res = MEFD.Aceptar2(cadena.Text);
 
-                    textboxResultado.Text = res.mensaje;
+                    //textboxResultado.Text = res.mensaje + " "+ String.Join(",", res.tok);
                 }
                 else
                 {
