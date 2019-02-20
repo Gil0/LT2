@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AFN_T2
@@ -75,17 +76,31 @@ namespace AFN_T2
             var estadoActual = Q0;
             int contadorLinea = 1;
             string toke = "";
+            char caracter;
             for (int i = 0; i < input.Length; i++)
             {
+                caracter = input[i];
+                Regex rexstr = new Regex("[a-zA-Z]");
+                Regex rexint = new Regex("[0-9]");
+
+                if(rexstr.IsMatch(caracter.ToString()))
+                {
+                    caracter = 'l';
+                }
+                if (rexint.IsMatch(caracter.ToString()))
+                {
+                    caracter = 'd';
+                }
+
                 Transicion normal = Transiciones.Find(t => t.EstadoInicial == estadoActual
-                                            && t.Simbolo == input[i]);
+                                            && t.Simbolo == caracter);
                 Transicion retroceso = Transiciones.Find(t => t.EstadoInicial == estadoActual
                                             && t.Simbolo == 'o');
 
                 if(normal != null)
                 {
                     acumula = acumula + input[i];
-                 //   Console.WriteLine("Estado normal "+normal.EstadoFinal);
+                    Console.WriteLine("Estado normal "+normal.EstadoFinal);
                     if (F.Contains(normal.EstadoFinal))
                     {
                         toke = EstadoNombre(Convert.ToInt32(normal.EstadoFinal));
@@ -110,7 +125,7 @@ namespace AFN_T2
                 else if(retroceso != null)
                 {
                     toke = EstadoNombre(Convert.ToInt32(retroceso.EstadoFinal));
-               //     Console.WriteLine("Estado retroceso "+retroceso.EstadoFinal);
+                   Console.WriteLine("Estado retroceso "+retroceso.EstadoFinal);
                     Console.WriteLine("Lexema encontrado: " + acumula + " en linea: " + contadorLinea + " token: " + toke);
                     acumula = "";
                     estadoActual = Q0;
