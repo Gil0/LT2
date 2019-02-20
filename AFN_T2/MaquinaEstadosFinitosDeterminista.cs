@@ -74,6 +74,7 @@ namespace AFN_T2
         {
             var estadoActual = Q0;
             int contadorLinea = 1;
+            string toke = "";
             for (int i = 0; i < input.Length; i++)
             {
                 Transicion normal = Transiciones.Find(t => t.EstadoInicial == estadoActual
@@ -84,11 +85,21 @@ namespace AFN_T2
                 if(normal != null)
                 {
                     acumula = acumula + input[i];
-                    Console.WriteLine("Estado normal "+normal.EstadoFinal);
-                    if (F.Contains(normal.EstadoFinal) || (i + 1) >= input.Length)
+                 //   Console.WriteLine("Estado normal "+normal.EstadoFinal);
+                    if (F.Contains(normal.EstadoFinal))
                     {
+                        toke = EstadoNombre(Convert.ToInt32(normal.EstadoFinal));
+                        Console.WriteLine("Lexema encontrado: " + acumula + " en linea: " + contadorLinea + " token: "+toke);
                         estadoActual = Q0;
-                        Console.WriteLine("Lexema encontrado: " + acumula + " en linea: " + contadorLinea);
+                        acumula = "";
+                    }
+                    else if ((i + 1) >= input.Length)
+                    {
+                        Transicion retroceso2 = Transiciones.Find(t => t.EstadoInicial == normal.EstadoFinal
+                                            && t.Simbolo == 'o');
+                        toke = EstadoNombre(Convert.ToInt32(retroceso2.EstadoFinal));
+                        Console.WriteLine("Lexema encontrado: " + acumula + " en linea: " + contadorLinea + " token: " + toke);
+                        estadoActual = Q0;
                         acumula = "";
                     }
                     else
@@ -98,8 +109,9 @@ namespace AFN_T2
                 }
                 else if(retroceso != null)
                 {
-                    Console.WriteLine("Estado retroceso "+retroceso.EstadoFinal);
-                    Console.WriteLine("Lexema encontrado: " + acumula + " en linea: " + contadorLinea);
+                    toke = EstadoNombre(Convert.ToInt32(retroceso.EstadoFinal));
+               //     Console.WriteLine("Estado retroceso "+retroceso.EstadoFinal);
+                    Console.WriteLine("Lexema encontrado: " + acumula + " en linea: " + contadorLinea + " token: " + toke);
                     acumula = "";
                     estadoActual = Q0;
                     i = i - 1;
@@ -107,7 +119,7 @@ namespace AFN_T2
                 else
                 {
 
-                    Console.WriteLine("ERROR: Lexema encontrado: " + acumula+" en linea: "+contadorLinea);
+               //     Console.WriteLine("ERROR: Lexema encontrado: " + acumula+" en linea: "+contadorLinea);
                     estadoActual = Q0;
                 }
                 if (input[i] == '\n')
@@ -130,7 +142,21 @@ namespace AFN_T2
             
         }
        
+        public string EstadoNombre(int valor)
+        {
+            for(int i = 0; i < Nombres.Count; i++)
+            {
+                int index = Nombres[i].IndexOf(':');
+                string izq = Nombres[i].Substring(0, index);
+                string der = Nombres[i].Substring(index + 1, (Nombres[i].Length) - (index + 1));
 
+                if (Convert.ToInt32(izq) == valor)
+                {
+                    return der;
+                }
+            }
+            return "";
+        }
         private bool InvalidInputOrFSM(string input)
         {
             if (InputContainsNotDefinedSymbols(input))

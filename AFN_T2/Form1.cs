@@ -297,7 +297,7 @@ namespace AFN_T2
                     }
                     String aux = EstadoInicial[0] + "";
                     Console.Out.WriteLine(aux);
-                    var MEFD = new MaquinaEstadosFinitosDeterminista(Q, Alfabeto, Transiciones, aux, EstadoFinal);
+                    var MEFD = new MaquinaEstadosFinitosDeterminista(Q, Alfabeto, Transiciones, aux, EstadoFinal, Nombres);
                     Respuesta res = new Respuesta();
                     res = MEFD.Aceptar2(cadena.Text);
 
