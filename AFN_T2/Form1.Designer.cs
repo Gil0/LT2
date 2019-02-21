@@ -31,16 +31,17 @@
             this.opciones = new System.Windows.Forms.GroupBox();
             this.ejecutar = new System.Windows.Forms.Button();
             this.abrir = new System.Windows.Forms.Button();
-            this.datos = new System.Windows.Forms.GroupBox();
-            this.textboxDatos = new System.Windows.Forms.RichTextBox();
             this.labelResultado = new System.Windows.Forms.GroupBox();
             this.textboxResultado = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cadena = new System.Windows.Forms.RichTextBox();
+            this.datos = new System.Windows.Forms.GroupBox();
+            this.gridSalida = new System.Windows.Forms.DataGridView();
             this.opciones.SuspendLayout();
-            this.datos.SuspendLayout();
             this.labelResultado.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.datos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSalida)).BeginInit();
             this.SuspendLayout();
             // 
             // opciones
@@ -75,32 +76,12 @@
             this.abrir.UseVisualStyleBackColor = true;
             this.abrir.Click += new System.EventHandler(this.abrir_Click);
             // 
-            // datos
-            // 
-            this.datos.Controls.Add(this.textboxDatos);
-            this.datos.Location = new System.Drawing.Point(32, 152);
-            this.datos.Name = "datos";
-            this.datos.Size = new System.Drawing.Size(734, 210);
-            this.datos.TabIndex = 1;
-            this.datos.TabStop = false;
-            this.datos.Text = "Datos";
-            this.datos.Enter += new System.EventHandler(this.datos_Enter);
-            // 
-            // textboxDatos
-            // 
-            this.textboxDatos.Location = new System.Drawing.Point(15, 28);
-            this.textboxDatos.Name = "textboxDatos";
-            this.textboxDatos.Size = new System.Drawing.Size(703, 162);
-            this.textboxDatos.TabIndex = 0;
-            this.textboxDatos.Text = "";
-            this.textboxDatos.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
-            // 
             // labelResultado
             // 
             this.labelResultado.Controls.Add(this.textboxResultado);
-            this.labelResultado.Location = new System.Drawing.Point(32, 350);
+            this.labelResultado.Location = new System.Drawing.Point(32, 348);
             this.labelResultado.Name = "labelResultado";
-            this.labelResultado.Size = new System.Drawing.Size(734, 134);
+            this.labelResultado.Size = new System.Drawing.Size(734, 136);
             this.labelResultado.TabIndex = 2;
             this.labelResultado.TabStop = false;
             this.labelResultado.Text = "Resultado";
@@ -119,7 +100,7 @@
             this.groupBox1.Controls.Add(this.cadena);
             this.groupBox1.Location = new System.Drawing.Point(32, 84);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(734, 62);
+            this.groupBox1.Size = new System.Drawing.Size(734, 116);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Entrada";
@@ -129,9 +110,28 @@
             // 
             this.cadena.Location = new System.Drawing.Point(15, 19);
             this.cadena.Name = "cadena";
-            this.cadena.Size = new System.Drawing.Size(703, 27);
+            this.cadena.Size = new System.Drawing.Size(703, 91);
             this.cadena.TabIndex = 0;
             this.cadena.Text = "";
+            // 
+            // datos
+            // 
+            this.datos.Controls.Add(this.gridSalida);
+            this.datos.Location = new System.Drawing.Point(32, 206);
+            this.datos.Name = "datos";
+            this.datos.Size = new System.Drawing.Size(734, 156);
+            this.datos.TabIndex = 1;
+            this.datos.TabStop = false;
+            this.datos.Text = "Datos";
+            this.datos.Enter += new System.EventHandler(this.datos_Enter);
+            // 
+            // gridSalida
+            // 
+            this.gridSalida.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSalida.Location = new System.Drawing.Point(15, 20);
+            this.gridSalida.Name = "gridSalida";
+            this.gridSalida.Size = new System.Drawing.Size(703, 101);
+            this.gridSalida.TabIndex = 0;
             // 
             // Form1
             // 
@@ -146,9 +146,10 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.opciones.ResumeLayout(false);
-            this.datos.ResumeLayout(false);
             this.labelResultado.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
+            this.datos.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridSalida)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -156,14 +157,14 @@
         #endregion
 
         private System.Windows.Forms.GroupBox opciones;
-        private System.Windows.Forms.GroupBox datos;
         private System.Windows.Forms.GroupBox labelResultado;
         private System.Windows.Forms.Button ejecutar;
         private System.Windows.Forms.Button abrir;
-        private System.Windows.Forms.RichTextBox textboxDatos;
         private System.Windows.Forms.RichTextBox textboxResultado;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RichTextBox cadena;
+        private System.Windows.Forms.GroupBox datos;
+        private System.Windows.Forms.DataGridView gridSalida;
     }
 }
 

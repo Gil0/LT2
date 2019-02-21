@@ -21,8 +21,9 @@ namespace AFN_T2
         private string acumula = "";
         private List<String> acumulador = new List<string>();
         private readonly List<string> Nombres = new List<string>();
+        private readonly List<string> Reservadas = new List<string>();
 
-        public MaquinaEstadosFinitosDeterminista(IEnumerable<string> conjuntoestados, IEnumerable<char> alfabeto, IEnumerable<Transicion> transiciones, string q0, IEnumerable<string> f, IEnumerable<string> nombres)
+        public MaquinaEstadosFinitosDeterminista(IEnumerable<string> conjuntoestados, IEnumerable<char> alfabeto, IEnumerable<Transicion> transiciones, string q0, IEnumerable<string> f, IEnumerable<string> nombres, IEnumerable<string> reservadas)
         {
             ConjuntoEstados = conjuntoestados.ToList();
             Alfabeto = alfabeto.ToList();
@@ -30,6 +31,7 @@ namespace AFN_T2
             AddInitialState(q0);
             AddFinalStates(f);
             Nombres = nombres.ToList();
+            Reservadas = reservadas.ToList();
 
         }
 
@@ -77,6 +79,9 @@ namespace AFN_T2
             int contadorLinea = 1;
             string toke = "";
             char caracter;
+            Respuesta r = new Respuesta();
+            SalidaLexico sl = new SalidaLexico();
+            List < SalidaLexico > listaSalida = new List<SalidaLexico>();
             for (int i = 0; i < input.Length; i++)
             {
                 caracter = input[i];
@@ -103,7 +108,19 @@ namespace AFN_T2
                     Console.WriteLine("Estado normal "+normal.EstadoFinal);
                     if (F.Contains(normal.EstadoFinal))
                     {
-                        toke = EstadoNombre(Convert.ToInt32(normal.EstadoFinal));
+                        if (Reservadas.Contains(acumula))
+                        {
+                            toke = "Palabra reservada";
+                        }
+                        else
+                        { 
+                            toke = EstadoNombre(Convert.ToInt32(normal.EstadoFinal));
+                        }
+                        sl = new SalidaLexico();
+                        sl.token = toke;
+                        sl.lexema = acumula;
+                        sl.linea = contadorLinea;
+                        listaSalida.Add(sl);
                         Console.WriteLine("Lexema encontrado: " + acumula + " en linea: " + contadorLinea + " token: "+toke);
                         estadoActual = Q0;
                         acumula = "";
@@ -112,7 +129,19 @@ namespace AFN_T2
                     {
                         Transicion retroceso2 = Transiciones.Find(t => t.EstadoInicial == normal.EstadoFinal
                                             && t.Simbolo == 'o');
-                        toke = EstadoNombre(Convert.ToInt32(retroceso2.EstadoFinal));
+                        if (Reservadas.Contains(acumula))
+                        {
+                            toke = "Palabra reservada";
+                        }
+                        else
+                        {
+                            toke = EstadoNombre(Convert.ToInt32(retroceso2.EstadoFinal));
+                        }
+                        sl = new SalidaLexico();
+                        sl.token = toke;
+                        sl.lexema = acumula;
+                        sl.linea = contadorLinea;
+                        listaSalida.Add(sl);
                         Console.WriteLine("Lexema encontrado: " + acumula + " en linea: " + contadorLinea + " token: " + toke);
                         estadoActual = Q0;
                         acumula = "";
@@ -124,8 +153,20 @@ namespace AFN_T2
                 }
                 else if(retroceso != null)
                 {
-                    toke = EstadoNombre(Convert.ToInt32(retroceso.EstadoFinal));
-                   Console.WriteLine("Estado retroceso "+retroceso.EstadoFinal);
+                    if (Reservadas.Contains(acumula))
+                    {
+                        toke = "Palabra reservada";
+                    }
+                    else
+                    {
+                        toke = EstadoNombre(Convert.ToInt32(retroceso.EstadoFinal));
+                    }
+                    sl = new SalidaLexico();
+                    sl.token = toke;
+                    sl.lexema = acumula;
+                    sl.linea = contadorLinea;
+                    listaSalida.Add(sl);
+                    Console.WriteLine("Estado retroceso "+retroceso.EstadoFinal);
                     Console.WriteLine("Lexema encontrado: " + acumula + " en linea: " + contadorLinea + " token: " + toke);
                     acumula = "";
                     estadoActual = Q0;
@@ -134,8 +175,16 @@ namespace AFN_T2
                 else
                 {
 
-               //     Console.WriteLine("ERROR: Lexema encontrado: " + acumula+" en linea: "+contadorLinea);
-                    estadoActual = Q0;
+                    //     Console.WriteLine("ERROR: Lexema encontrado: " + acumula+" en linea: "+contadorLinea);
+                    if (input[i] != '\n' && input[i] != '\t' && input[i] != ' ')
+                    {
+                        sl = new SalidaLexico();
+                        sl.token = "Error";
+                        sl.lexema = input[i].ToString();
+                        sl.linea = contadorLinea;
+                        listaSalida.Add(sl);
+                        estadoActual = Q0;
+                    }
                 }
                 if (input[i] == '\n')
                 {
@@ -144,16 +193,9 @@ namespace AFN_T2
             }  //fin for
 
 
-            if (F.Contains(estadoActual))
-            {
-                respuesta.estado = true;
-                respuesta.mensaje = "cadena aceptttttada ";
-                respuesta.tok = acumulador;
-                return respuesta;
-            }
-            respuesta.estado = false;
-            respuesta.mensaje = "Cadena NO aceptada \n Detenido en el estado: " + estadoActual + " el cual no es un estado final";
-            return respuesta;
+            r.salida = listaSalida;
+
+            return r;
             
         }
        

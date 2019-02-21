@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace AFN_T2
 {
-   class Respuesta
+    class SalidaLexico
     {
-        public Boolean estado;
-        public String mensaje;
-        public List<SalidaLexico> salida;
+        public string token;
+        public string lexema;
+        public int linea;
+
     }
 }

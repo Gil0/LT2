@@ -26,6 +26,7 @@ namespace AFN_T2
         List<string> Nombres;
         List<Transicion> Transiciones;
         List<string> DATA;
+        List<string> PalabrasR;
 
         public Form1()
         {
@@ -78,6 +79,7 @@ namespace AFN_T2
                     EstadoInicial = new List<char>();
                     EstadoFinal = new List<string>();
                     Transiciones = new List<Transicion>();
+                    PalabrasR = new List<string>();
                     DATA = new List<string>();
                     StreamReader file = new System.IO.StreamReader(rutaArchivo);
                     while ((line = file.ReadLine()) != null)
@@ -118,6 +120,12 @@ namespace AFN_T2
                             case 9:
                                 foreach (var s in DATA[i].Split(','))
                                 {
+                                    PalabrasR.Add(s);
+                                }
+                                break;
+                            case 11:
+                                foreach (var s in DATA[i].Split(','))
+                                {
                                     Nombres.Add(s);
                                     int index = s.IndexOf(':');
                                     string izq = s.Substring(0, index);
@@ -126,7 +134,7 @@ namespace AFN_T2
                                 }
                                 break;
                             default:
-                                if (i > 10)
+                                if (i > 12)
                                 {
                                     String[] transicion = new String[3];
                                     int count = 0;
@@ -189,7 +197,7 @@ namespace AFN_T2
                         transicionesinfo = transicionesinfo + Transiciones[i] + "\n";
                     }
                     String showData = Qinfo + "\n" + AlfabetoInfo + "\n" + q0info + "\n" + Finfo + "\n" + transicionesinfo;
-                    textboxDatos.Text = showData;
+                    
                     /*
                                        Console.Out.WriteLine("Conjunto estados");
                                        for (int i = 0; i < Q.Count; i++){
@@ -297,10 +305,16 @@ namespace AFN_T2
                     }
                     String aux = EstadoInicial[0] + "";
                     Console.Out.WriteLine(aux);
-                    var MEFD = new MaquinaEstadosFinitosDeterminista(Q, Alfabeto, Transiciones, aux, EstadoFinal, Nombres);
+                    var MEFD = new MaquinaEstadosFinitosDeterminista(Q, Alfabeto, Transiciones, aux, EstadoFinal, Nombres, PalabrasR);
                     Respuesta res = new Respuesta();
                     res = MEFD.Aceptar2(cadena.Text);
-
+                    gridSalida.DataSource = res.salida;
+                    textboxResultado.Text = "Token -> Lexema -> Linea \n";
+                    for(int j = 0; j < res.salida.Count; j++)
+                    {
+                        textboxResultado.Text += res.salida[j].token + " -> " + res.salida[j].lexema + " -> " +
+                            res.salida[j].linea + "\n";
+                    }
                     //textboxResultado.Text = res.mensaje + " "+ String.Join(",", res.tok);
                 }
                 else
