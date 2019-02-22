@@ -235,13 +235,13 @@ namespace AFN_T2
                 }
                 else
                 {
-                    textboxResultado.Text = "Error abrir Archivo";
+                    MessageBox.Show("Error al abrir archivo");
                    
                 }
             }
             else
             {
-                textboxResultado.Text = "No se ha seleccionado un archivo";
+                MessageBox.Show("No se ha seleccionado archivo");
             }
         }
 
@@ -252,11 +252,12 @@ namespace AFN_T2
 
         private void ejecutar_Click(object sender, EventArgs e)
         {
+            dataGridView1.Rows.Clear();
             int contadorError = 0;
             
             if (DATA == null)
             {
-                textboxResultado.Text = "No hay nada que analizar";
+                MessageBox.Show("No hay nada que analizar");
 
             }
             else
@@ -308,23 +309,35 @@ namespace AFN_T2
                     var MEFD = new MaquinaEstadosFinitosDeterminista(Q, Alfabeto, Transiciones, aux, EstadoFinal, Nombres, PalabrasR);
                     Respuesta res = new Respuesta();
                     res = MEFD.Aceptar2(cadena.Text);
-                    gridSalida.DataSource = res.salida;
-                    textboxResultado.Text = "Token -> Lexema -> Linea \n";
-                    for(int j = 0; j < res.salida.Count; j++)
+                    
+                    dataGridView1.ColumnCount = 4;
+                    dataGridView1.Columns[0].Name = "Token";
+                    dataGridView1.Columns[1].Name = "Lexema";
+                    dataGridView1.Columns[2].Name = "Linea";
+                    dataGridView1.Columns[3].Name = "Error";
+                    dataGridView1.Columns[0].Width = 110;
+                    dataGridView1.Columns[1].Width = 150;
+                    dataGridView1.Columns[2].Width = 50;
+                    dataGridView1.Columns[3].Width = 350;
+                    for (int j = 0; j < res.salida.Count; j++)
                     {
-                        textboxResultado.Text += res.salida[j].token + " -> " + res.salida[j].lexema + " -> " +
-                            res.salida[j].linea + "\n";
+                       
+                        dataGridView1.Rows.Add(res.salida[j].token, res.salida[j].lexema, res.salida[j].linea, res.salida[j].error);
                     }
-                    //textboxResultado.Text = res.mensaje + " "+ String.Join(",", res.tok);
                 }
                 else
                 {
-                    textboxResultado.Text = "El automata no es determinista";
+                    MessageBox.Show("El automata no es determinista");
                 }
             }
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

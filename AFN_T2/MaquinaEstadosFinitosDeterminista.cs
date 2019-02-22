@@ -182,6 +182,7 @@ namespace AFN_T2
                         sl.token = "Error";
                         sl.lexema = input[i].ToString();
                         sl.linea = contadorLinea;
+                        sl.error = "El caracter '" + input[i].ToString()+"' no pertenece al alfabeto";
                         listaSalida.Add(sl);
                         estadoActual = Q0;
                     }

@@ -11,6 +11,6 @@ namespace AFN_T2
         public string token;
         public string lexema;
         public int linea;
-
+        public string error;
     }
 }
